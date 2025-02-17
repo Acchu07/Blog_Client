@@ -1,32 +1,20 @@
-import { useState } from 'react'
-import Login from './components/LoginForm.jsx'
-import SignUpForm from './components/signUpForm.jsx'
-import DisplayButton from './components/button.jsx'
+import { BrowserRouter, Routes, Route } from "react-router";
+import { useState } from "react";
+import HomePage from "./components/homepage.jsx"
+import Dashboard from "./components/Dashboard.jsx";
+import { UserLoggedInProvider } from "./context/userLoggedInContext.jsx";
 
 
 function App() {
-  const [displayView, setDisplayView] = useState(0);
-
-  function showView(){
-    switch (displayView) {
-      case 1:
-        return <Login />;
-      case 2:
-        return <SignUpForm />;
-      default:
-        return null;
-    }
-  }
-
-
   return (
-    <>
-      <DisplayButton setDisplayView={setDisplayView} displayView={displayView}>Login</DisplayButton>
-      <DisplayButton setDisplayView={setDisplayView} displayView={displayView}>Sign Up</DisplayButton>
-      {showView()}
-      <p>Posts are Here</p>:
-
-    </>
+    <UserLoggedInProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </BrowserRouter>
+    </UserLoggedInProvider>
   )
 }
 

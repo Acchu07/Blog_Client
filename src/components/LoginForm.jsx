@@ -1,25 +1,31 @@
 import AuthForm from "./authForm";
+import { useState } from "react";
+import defaultPath from "../utils/paths";
 
-export default function Login(setUserLoggedIn){
-
+export default function Login({setUserLoggedIn}){
+    const [errors, setErrors] = useState('')
     // ToDo handle invalid username and password on this page itself
     async function hasClicked(username, password){
-        console.log('Clicked Login')        
-        const response = await fetch('http://localhost:3000/user/login', {
+        setErrors('')
+        const response = await fetch(`${defaultPath}user/login`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ username, password })
         });
         const jsObJ = await response.json();
-        console.log(jsObJ.user);
-
-
+        if(jsObJ.user){
+            setUserLoggedIn({bIsLoggedIn:true,userName:jsObJ.user})
+            return;
+        }
+        setErrors(jsObJ)
     }
     return (
         <>
-        <AuthForm clicked={hasClicked}/>
+        {errors.message}
+        <AuthForm clicked={hasClicked} customData={"Login"}/>
         </>
     )
 }

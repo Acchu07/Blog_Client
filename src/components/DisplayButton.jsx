@@ -1,3 +1,5 @@
+import styles from '../css/homepage.module.css';
+
 export default function DisplayButton({children, setDisplayView , displayView}){
     
     function updateDisplayState(){
@@ -13,5 +15,5 @@ export default function DisplayButton({children, setDisplayView , displayView}){
         }
 
     }
-    return <button onClick={updateDisplayState}>{children}</button>
+    return <button className={styles.button} onClick={updateDisplayState}>{children}</button>
 }
