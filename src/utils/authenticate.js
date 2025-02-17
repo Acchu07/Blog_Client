@@ -1,6 +1,8 @@
+import defaultPath from "./paths";
+
 export default async function AuthenticateUser(setUserLoggedIn) {
     try {
-        const response = await fetch('http://localhost:3000/user/authenticate', {
+        const response = await fetch(`${defaultPath}user/authenticate`, {
             method: 'GET',
             credentials: 'include',
             headers: {
